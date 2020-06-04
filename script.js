@@ -11,7 +11,7 @@ class Question {
 let questions = [
   new Question("Quelle méthode Javascript permet de filtrer les éléments d'un tableau", ["indexOf()", "map()", "filter()", "reduce()"], "filter()"),
   new Question("Quelle méthode Javascript permet de vérifier si un élément figure dans un tableau", ["isNaN()","includes()", "findIndex()", "isOdd()"], "includes()"),
-  new Question("Quelle méthode transforme du JSON en un object Javascript ?", ["JSON.parse()","JSON.stringify()", "JSON.object()", "JSON.toJS"], "JSON.parse()"),
+  new Question("Quelle méthode transforme du JSON en un objet Javascript ?", ["JSON.parse()","JSON.stringify()", "JSON.object()", "JSON.toJS"], "JSON.parse()"),
   new Question("Quel objet Javascript permet d'arrondir à l'entier le plus proche", ["Math.ceil()","Math.floor()", "Math.round()", "Math.random()"], "Math.round()"),
 ];
 
@@ -37,13 +37,13 @@ class Quiz {
 
 const display = {
   elementShown: function(id, text) {
-      let element = document.getElementById(id);
-      element.innerHTML = text;
+    let element = document.getElementById(id);
+    element.innerHTML = text;
   },
   endQuiz: function() {
     endQuizHTML = `
       <h1>Quiz terminé !</h1>
-      <h2> Votre score est de : ${quiz.score} / ${quiz.questions.length}`;
+      <h3> Votre score est de : ${quiz.score} / ${quiz.questions.length}</h3>`;
     this.elementShown("quiz", endQuizHTML);
   },
   question: function() {
@@ -71,6 +71,7 @@ const display = {
   },
 };
 
+// Game logic
 quizApp = () => {
   if (quiz.hasEnded()) {
     display.endQuiz();
@@ -80,6 +81,6 @@ quizApp = () => {
     display.progress();
   } 
 }
-//Create Quiz
+// Create Quiz
 let quiz = new Quiz(questions);
 quizApp();
