@@ -1,12 +1,6 @@
-### Fichier de base pour commencer un mini-projet 
+### Quiz en pure JS
 
-Avec : 
-* des photos randoms
-* une navbar toute faite
-* un body tout fait
-* des sons
-* des svg
-* jQuery et Bootstrap reliés
-
-#### Démarrer projet avec Sass 
-* `npm run sass`
+Beaucoup d'ajouts possibles :
+* Intégrer des boutons
+* Intégrer un bilan des réponses
+* Montrer après chaque réponse si elle est correcte
