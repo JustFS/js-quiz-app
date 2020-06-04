@@ -9,10 +9,10 @@ class Question {
   }
 }
 let questions = [
-  new Question("Who was the first President of the United States?", [ "George Washington", "Thomas Jefferson", "Thomas Edison", "I don't know" ], "George Washington"),
-  new Question("What is the answer to the Ultimate Question of Life, the Universe, and Everything?", ["Pi","42", "Wah?", "I don't know"], "42"),
-  new Question("Do you love to code?", ["No","Yes", "Hell Yeah", "No"], "Hell Yeah"),
-  new Question("What's the best programming language?", ["Javascript","C#", "Php", "Python"], "Javascript"),
+  new Question("Quelle méthode Javascript permet de filtrer les éléments d'un tableau", ["indexOf()", "map()", "filter()", "reduce()"], "filter()"),
+  new Question("Quelle méthode Javascript permet de vérifier si un élément figure dans un tableau", ["isNaN()","includes()", "findIndex()", "isOdd()"], "includes()"),
+  new Question("Quelle méthode transforme du JSON en un object Javascript ?", ["JSON.parse()","JSON.stringify()", "JSON.object()", "JSON.toJS"], "JSON.parse()"),
+  new Question("Quel objet Javascript permet d'arrondir à l'entier le plus proche", ["Math.ceil()","Math.floor()", "Math.round()", "Math.random()"], "Math.round()"),
 ];
 
 class Quiz {
@@ -35,52 +35,51 @@ class Quiz {
   }
 }
 
-
-const Display = {
-  populateSelector: function(id, text) {
-    let element = document.getElementById(id);
-    element.innerHTML = text;
-  },
-  question: function() {
-    this.populateSelector("question", quiz.getCurrentQuestion().text);
-  },
-  choices: function() {
-    var choices = quiz.getCurrentQuestion().choices;
-
-    for(let i = 0; i < choices.length; i++) {
-      this.populateSelector("choice" + i, choices[i]);
-      this.guessHandler("guess" + i, choices[i]);
-    }
-  },
-  guessHandler: function(id, guess) {
-    let button = document.getElementById(id);
-    button.onclick = function() {
-      quiz.guess(guess);
-      quizApp();
-    }
-  },
-  progress: function() {
-    let currentQuestionNumber = quiz.currentQuestionIndex + 1;
-    this.populateSelector("progress", "Question " + currentQuestionNumber + " of " + quiz.questions.length);
+const display = {
+  elementShown: function(id, text) {
+      let element = document.getElementById(id);
+      element.innerHTML = text;
   },
   endQuiz: function() {
     endQuizHTML = `
       <h1>Quiz terminé !</h1>
-      <h2> votre score est de : ${quiz.score} / ${quiz.questions.length}`;
-      this.populateSelector("quiz", endQuizHTML);
+      <h2> Votre score est de : ${quiz.score} / ${quiz.questions.length}`;
+    this.elementShown("quiz", endQuizHTML);
+  },
+  question: function() {
+    this.elementShown("question", quiz.getCurrentQuestion().text);
+  },
+  choices: function() {
+    let choices = quiz.getCurrentQuestion().choices;
+
+    guessHandler = (id, guess) => {
+      let button = document.getElementById(id);
+      button.onclick = function() {
+        quiz.guess(guess);
+        quizApp();
+      }
+    }
+
+    for(let i = 0; i < choices.length; i++) {
+      this.elementShown("choice" + i, choices[i]);
+      guessHandler("guess" + i, choices[i]);
+    }
+  },
+  progress: function() {
+    let currentQuestionNumber = quiz.currentQuestionIndex + 1;
+    this.elementShown("progress", "Question " + currentQuestionNumber + " sur " + quiz.questions.length);
   },
 };
 
 quizApp = () => {
   if (quiz.hasEnded()) {
-    Display.endQuiz();
+    display.endQuiz();
   } else {
-    Display.question();
-    Display.choices();
-    Display.progress();
-  }
+    display.question();
+    display.choices();
+    display.progress();
+  } 
 }
-
 //Create Quiz
 let quiz = new Quiz(questions);
 quizApp();
