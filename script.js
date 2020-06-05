@@ -12,7 +12,7 @@ let questions = [
   new Question("Quelle méthode Javascript permet de filtrer les éléments d'un tableau", ["indexOf()", "map()", "filter()", "reduce()"], "filter()"),
   new Question("Quelle méthode Javascript permet de vérifier si un élément figure dans un tableau", ["isNaN()","includes()", "findIndex()", "isOdd()"], "includes()"),
   new Question("Quelle méthode transforme du JSON en un objet Javascript ?", ["JSON.parse()","JSON.stringify()", "JSON.object()", "JSON.toJS"], "JSON.parse()"),
-  new Question("Quel objet Javascript permet d'arrondir à l'entier le plus proche", ["Math.ceil()","Math.floor()", "Math.round()", "Math.random()"], "Math.round()"),
+  new Question("Quel objet Javascript permet d'arrondir à l'entier le plus proche", ["Math.ceil()","Math.floor()", "Math.round()", "Math.random()"], "Math.round()")
 ];
 
 class Quiz {
@@ -53,13 +53,12 @@ const display = {
     let choices = quiz.getCurrentQuestion().choices;
 
     guessHandler = (id, guess) => {
-      let button = document.getElementById(id);
-      button.onclick = function() {
+      document.getElementById(id).onclick = function() {
         quiz.guess(guess);
         quizApp();
       }
     }
-
+    // affichage choix + prise en compte du choix
     for(let i = 0; i < choices.length; i++) {
       this.elementShown("choice" + i, choices[i]);
       guessHandler("guess" + i, choices[i]);
